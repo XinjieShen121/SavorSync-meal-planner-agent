@@ -1,0 +1,254 @@
+[
+  {
+    "id": "r1",
+    "name": "Chicken Stir Fry",
+    "cuisine": "Chinese",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 30, "vegetables": 2, "calories": 450 }
+  },
+  {
+    "id": "r2",
+    "name": "Mapo Tofu",
+    "cuisine": "Chinese",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.7,
+    "cultural_authenticity": 0.95,
+    "nutrition": { "protein": 18, "vegetables": 1, "calories": 420 }
+  },
+  {
+    "id": "r3",
+    "name": "Egg Fried Rice",
+    "cuisine": "Chinese",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.95,
+    "cultural_authenticity": 0.65,
+    "nutrition": { "protein": 12, "vegetables": 1, "calories": 430 }
+  },
+  {
+    "id": "r4",
+    "name": "Teriyaki Salmon",
+    "cuisine": "Japanese",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.85,
+    "cultural_authenticity": 0.75,
+    "nutrition": { "protein": 28, "vegetables": 1, "calories": 460 }
+  },
+  {
+    "id": "r5",
+    "name": "Sushi Bowl",
+    "cuisine": "Japanese",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.8,
+    "cultural_authenticity": 0.7,
+    "nutrition": { "protein": 22, "vegetables": 2, "calories": 430 }
+  },
+  {
+    "id": "r6",
+    "name": "Miso Soup Set",
+    "cuisine": "Japanese",
+    "prep_time": 15,
+    "ingredient_accessibility": 0.85,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 10, "vegetables": 1, "calories": 220 }
+  },
+  {
+    "id": "r7",
+    "name": "Bibimbap",
+    "cuisine": "Korean",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.75,
+    "cultural_authenticity": 0.85,
+    "nutrition": { "protein": 20, "vegetables": 3, "calories": 500 }
+  },
+  {
+    "id": "r8",
+    "name": "Kimchi Fried Rice",
+    "cuisine": "Korean",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.8,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 15, "vegetables": 1, "calories": 480 }
+  },
+  {
+    "id": "r9",
+    "name": "Bulgogi Bowl",
+    "cuisine": "Korean",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.75,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 27, "vegetables": 2, "calories": 510 }
+  },
+  {
+    "id": "r10",
+    "name": "Vegetable Curry",
+    "cuisine": "Indian",
+    "prep_time": 40,
+    "ingredient_accessibility": 0.85,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 12, "vegetables": 3, "calories": 410 }
+  },
+  {
+    "id": "r11",
+    "name": "Chicken Tikka Bowl",
+    "cuisine": "Indian",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.75,
+    "cultural_authenticity": 0.7,
+    "nutrition": { "protein": 32, "vegetables": 1, "calories": 490 }
+  },
+  {
+    "id": "r12",
+    "name": "Chana Masala",
+    "cuisine": "Indian",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.85,
+    "cultural_authenticity": 0.85,
+    "nutrition": { "protein": 16, "vegetables": 2, "calories": 390 }
+  },
+  {
+    "id": "r13",
+    "name": "Pad Thai",
+    "cuisine": "Thai",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.75,
+    "cultural_authenticity": 0.75,
+    "nutrition": { "protein": 18, "vegetables": 1, "calories": 500 }
+  },
+  {
+    "id": "r14",
+    "name": "Thai Basil Chicken",
+    "cuisine": "Thai",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.8,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 28, "vegetables": 1, "calories": 420 }
+  },
+  {
+    "id": "r15",
+    "name": "Green Curry Tofu",
+    "cuisine": "Thai",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.7,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 14, "vegetables": 3, "calories": 430 }
+  },
+  {
+    "id": "r16",
+    "name": "Pho Bowl",
+    "cuisine": "Vietnamese",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.75,
+    "cultural_authenticity": 0.85,
+    "nutrition": { "protein": 24, "vegetables": 2, "calories": 410 }
+  },
+  {
+    "id": "r17",
+    "name": "Banh Mi Plate",
+    "cuisine": "Vietnamese",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.8,
+    "cultural_authenticity": 0.7,
+    "nutrition": { "protein": 20, "vegetables": 1, "calories": 440 }
+  },
+  {
+    "id": "r18",
+    "name": "Fish Tacos",
+    "cuisine": "Mexican",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.7,
+    "nutrition": { "protein": 24, "vegetables": 2, "calories": 440 }
+  },
+  {
+    "id": "r19",
+    "name": "Bean Burrito Bowl",
+    "cuisine": "Mexican",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.95,
+    "cultural_authenticity": 0.65,
+    "nutrition": { "protein": 16, "vegetables": 2, "calories": 430 }
+  },
+  {
+    "id": "r20",
+    "name": "Chicken Quesadilla Plate",
+    "cuisine": "Mexican",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.6,
+    "nutrition": { "protein": 25, "vegetables": 1, "calories": 510 }
+  },
+  {
+    "id": "r21",
+    "name": "Greek Chicken Plate",
+    "cuisine": "Greek",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.75,
+    "nutrition": { "protein": 29, "vegetables": 2, "calories": 470 }
+  },
+  {
+    "id": "r22",
+    "name": "Lentil Soup",
+    "cuisine": "Middle Eastern",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 14, "vegetables": 2, "calories": 350 }
+  },
+  {
+    "id": "r23",
+    "name": "Falafel Bowl",
+    "cuisine": "Middle Eastern",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.85,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 16, "vegetables": 3, "calories": 420 }
+  },
+  {
+    "id": "r24",
+    "name": "Grilled Chicken Salad",
+    "cuisine": "American",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.95,
+    "cultural_authenticity": 0.55,
+    "nutrition": { "protein": 30, "vegetables": 3, "calories": 380 }
+  },
+  {
+    "id": "r25",
+    "name": "Turkey Sandwich Plate",
+    "cuisine": "American",
+    "prep_time": 15,
+    "ingredient_accessibility": 0.98,
+    "cultural_authenticity": 0.5,
+    "nutrition": { "protein": 22, "vegetables": 1, "calories": 390 }
+  },
+  {
+    "id": "r26",
+    "name": "Pasta Primavera",
+    "cuisine": "Italian",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.92,
+    "cultural_authenticity": 0.7,
+    "nutrition": { "protein": 14, "vegetables": 3, "calories": 460 }
+  },
+  {
+    "id": "r27",
+    "name": "Chicken Alfredo",
+    "cuisine": "Italian",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.95,
+    "cultural_authenticity": 0.6,
+    "nutrition": { "protein": 26, "vegetables": 1, "calories": 560 }
+  },
+  {
+    "id": "r28",
+    "name": "Ratatouille Plate",
+    "cuisine": "French",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.85,
+    "cultural_authenticity": 0.75,
+    "nutrition": { "protein": 10, "vegetables": 4, "calories": 320 }
+  }
+]
