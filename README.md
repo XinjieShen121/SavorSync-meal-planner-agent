@@ -8,25 +8,34 @@ The goal of this project is to build an intelligent meal-planning agent that gen
 
 Instead of recommending one recipe at a time, the system treats an entire weekly meal plan as a single search state. The agent then evaluates that state with a weighted utility function and improves it using local search.
 
-The current prototype focuses on these ideas from AI:
+The current system focuses on these ideas from AI:
 
-- **state representation**: a full weekly meal plan is one state
-- **actions / neighbors**: meal plans are modified by replacing one meal or swapping meals
-- **utility-based evaluation**: plans are scored based on multiple factors
+- **state representation**: a full weekly meal plan is one search state
+- **actions / neighbors**: meal plans are modified through local changes such as replacement, cuisine-aware substitution, prep-time reduction, and vegetable improvement
+- **utility-based evaluation**: plans are scored based on multiple weighted factors
 - **hard constraints**: invalid plans are rejected
 - **local search**: hill climbing and simulated annealing are used to improve plans
+- **preference modeling**: different user priorities are represented through different weight settings
+- **experimental evaluation**: repeated runs are used to compare the two search algorithms
 
 ## What the current version does
 
-The current MVP includes:
+The current version includes:
 
-- a small recipe dataset in JSON
+- an expanded recipe dataset in JSON with multiple cuisines and varied nutrition / prep-time profiles
 - a weekly meal-plan state representation
 - a weighted utility / scoring function
-- hard nutrition constraints
+- hard nutrition and diversity constraints
+- a score-breakdown system for interpretable output
+- multiple neighbor-generation actions
 - two search algorithms:
   - hill climbing
   - simulated annealing
+- three user preference modes:
+  - health-focused
+  - convenience-focused
+  - cultural-exploration-focused
+- an experiment script for repeated algorithm comparison
 
 The scoring function currently considers:
 
@@ -34,6 +43,7 @@ The scoring function currently considers:
 - vegetables
 - ingredient accessibility
 - cultural authenticity
+- cuisine diversity
 - preparation time
 - repetition penalty
 
@@ -44,9 +54,11 @@ This project is currently testing whether:
 1. a weekly meal plan can be represented as a search state
 2. a utility function can evaluate whether one plan is better than another
 3. local search algorithms can improve a random initial meal plan
-4. hard constraints and preference weights meaningfully shape the result
+4. different user preference modes produce meaningfully different plans
+5. hill climbing and simulated annealing behave differently across repeated trials
 
-At this stage, the output does **not** need to be a perfect final meal plan. The main purpose is to verify that the AI search framework is working correctly.
+At this stage, the project is still a prototype rather than a full product, but it already demonstrates the core AI planning framework.
+
 
 ## Project structure
 
@@ -61,7 +73,8 @@ SavorSync-meal-planner-agent/
 │   ├── neighbors.py
 │   ├── hill_climbing.py
 │   ├── simulated_annealing.py
-│   └── main.py
+│   ├── main.py
+│   └── experiment.py
 ├── README.md
 └── .gitignore
 ```
@@ -69,7 +82,8 @@ SavorSync-meal-planner-agent/
 ## File Overview
 
 ### `data/recipes.json`
-A small starter recipe dataset. Each recipe contains:
+
+Recipe dataset used by the planner. Each recipe contains:
 - cuisine
 - prep time
 - ingredient accessibility
@@ -83,10 +97,10 @@ Loads the recipe dataset from JSON.
 Defines the meal-plan state.
 
 ### `src/scoring.py`
-Implements the utility function and hard constraints.
+Implements the weighted utility function, hard constraints, and score-breakdown logic.
 
 ### `src/neighbors.py`
-Creates neighboring meal plans by replacing or swapping meals.
+Creates neighboring meal plans through actions such as replacement, cuisine-aware substitution, prep-time reduction, diversity improvement, and vegetable improvement.
 
 ### `src/hill_climbing.py`
 Implements hill climbing as a baseline local search method.
@@ -95,7 +109,10 @@ Implements hill climbing as a baseline local search method.
 Implements simulated annealing to help escape poor local optima.
 
 ### `src/main.py`
-Runs the planner and prints the results.
+Runs the planner in the three preference modes and prints meal plans, key metrics, and algorithm comparisons.
+
+### `src/experiment.py`
+Runs repeated experiments to compare hill climbing and simulated annealing across preference modes.
 
 ## Setup Instructions
 
@@ -116,134 +133,319 @@ pip install pandas
 
 ## How to Run the Project
 
+### Run the main planner
 From the project root folder, run: 
 
 ```bash
-PYTHONPATH=src python3 src/main.py
+python3 src/main.py
+```
+
+### Run the experiment script
+To compare hill climbing and simulated annealing across repeated trials, run: 
+
+```bash
+python3 src/experiment.py
 ```
 
 ## What You Should See
  
-The program prints:
+The main planner prints results for:
+- health-focused mode
+- convenience-focused mode
+- cultural-exploration mode
+
+For each mode, it prints:
 - an initial random meal plan
 - a hill climbing result
 - a simulated annealing result
-- a score for each plan
+- key metrics
+- a score comparison
 
-### Example Output
+### Example Output Style
 
 ```text
+HEALTH-FOCUSED MODE
+############################################################
+
 Initial Random Plan
 ==================================================
-1. Green Curry Tofu | Thai | 30 min
-2. Banh Mi Plate | Vietnamese | 20 min
+1. Egg Fried Rice | Chinese | 20 min
+2. Roasted Chickpea Wrap | Mediterranean | 15 min
 3. Teriyaki Salmon | Japanese | 20 min
-4. Ratatouille Plate | French | 35 min
-5. Kimchi Fried Rice | Korean | 20 min
-6. Pho Bowl | Vietnamese | 35 min
-7. Grilled Chicken Salad | American | 20 min
-8. Greek Chicken Plate | Greek | 30 min
-9. Bulgogi Bowl | Korean | 30 min
-10. Pasta Primavera | Italian | 30 min
-Score: 219.74
+4. Vegetable Curry | Indian | 40 min
+5. Falafel Bowl | Middle Eastern | 25 min
+6. Lentil Soup | Middle Eastern | 35 min
+7. Shrimp Rice Bowl | Vietnamese | 20 min
+8. Mapo Tofu | Chinese | 30 min
+9. Turkey Sandwich Plate | American | 15 min
+10. Pho Bowl | Vietnamese | 35 min
+Key Metrics:
+  Protein: 187
+  Vegetables: 19
+  Prep Time: 255
+  Unique Cuisines: 7
+  Repetition Count: 0
+  Final Score: 238.25
 
 Hill Climbing Result
 ==================================================
 1. Greek Chicken Plate | Greek | 30 min
-2. Grilled Chicken Salad | American | 20 min
-3. Chicken Stir Fry | Chinese | 25 min
-4. Thai Basil Chicken | Thai | 20 min
-5. Bulgogi Bowl | Korean | 30 min
-6. Chicken Tikka Bowl | Indian | 35 min
-7. Fish Tacos | Mexican | 25 min
-8. Falafel Bowl | Middle Eastern | 25 min
-9. Chicken Alfredo | Italian | 30 min
-10. Teriyaki Salmon | Japanese | 20 min
-Score: 267.7
+2. Grilled Steak Bowl | American | 30 min
+3. Fish Tacos | Mexican | 25 min
+4. Mediterranean Salmon Plate | Mediterranean | 25 min
+5. German Chicken Schnitzel Plate | German | 35 min
+6. Grilled Chicken Salad | American | 20 min
+7. Chicken Stir Fry | Chinese | 25 min
+8. Chicken Breast Veggie Plate | American | 25 min
+9. Salmon Quinoa Bowl | American | 25 min
+10. Peruvian Chicken Bowl | South American | 30 min
+Key Metrics:
+  Protein: 300
+  Vegetables: 25
+  Prep Time: 270
+  Unique Cuisines: 7
+  Repetition Count: 0
+  Final Score: 365.81
 
 Simulated Annealing Result
 ==================================================
-1. Fish Tacos | Mexican | 25 min
-2. Greek Chicken Plate | Greek | 30 min
-3. Chicken Stir Fry | Chinese | 25 min
-4. Pho Bowl | Vietnamese | 35 min
-5. Chicken Alfredo | Italian | 30 min
-6. Bulgogi Bowl | Korean | 30 min
-7. Teriyaki Salmon | Japanese | 20 min
-8. Chicken Tikka Bowl | Indian | 35 min
-9. Thai Basil Chicken | Thai | 20 min
-10. Grilled Chicken Salad | American | 20 min
-Score: 269.0
+1. Chicken Rice Bowl | Japanese | 20 min
+2. Salmon Quinoa Bowl | American | 25 min
+3. Thai Basil Chicken | Thai | 20 min
+4. Mediterranean Salmon Plate | Mediterranean | 25 min
+5. Grilled Steak Bowl | American | 30 min
+6. Chicken Stir Fry | Chinese | 25 min
+7. Grilled Chicken Salad | American | 20 min
+8. Greek Chicken Plate | Greek | 30 min
+9. Chicken Breast Veggie Plate | American | 25 min
+10. Peruvian Chicken Bowl | South American | 30 min
+Key Metrics:
+  Protein: 300
+  Vegetables: 24
+  Prep Time: 250
+  Unique Cuisines: 7
+  Repetition Count: 0
+  Final Score: 366.79
 
 Search Comparison
 ==================================================
-Initial Score: 219.74
-Hill Climbing Score: 267.7
-Simulated Annealing Score: 269.0
+Initial Score: 238.25
+Hill Climbing Score: 365.81
+Simulated Annealing Score: 366.79
 Better algorithm in this run: Simulated Annealing
+
+
+CONVENIENCE-FOCUSED MODE
+############################################################
+
+Initial Random Plan
+==================================================
+1. Thai Basil Chicken | Thai | 20 min
+2. Mapo Tofu | Chinese | 30 min
+3. Brazilian Black Bean Plate | South American | 35 min
+4. Tuna Sandwich Plate | American | 10 min
+5. Green Curry Tofu | Thai | 30 min
+6. Moroccan Chickpea Stew | African | 40 min
+7. Banh Mi Plate | Vietnamese | 20 min
+8. Bibimbap | Korean | 35 min
+9. Chana Masala | Indian | 30 min
+10. Roasted Vegetable Plate | Mediterranean | 35 min
+Key Metrics:
+  Protein: 185
+  Vegetables: 25
+  Prep Time: 285
+  Unique Cuisines: 9
+  Repetition Count: 0
+  Final Score: 102.88
+
+Hill Climbing Result
+==================================================
+1. Salmon Quinoa Bowl | American | 25 min
+2. Grilled Chicken Salad | American | 20 min
+3. Mediterranean Salmon Plate | Mediterranean | 25 min
+4. Grilled Steak Bowl | American | 30 min
+5. Greek Chicken Plate | Greek | 30 min
+6. Chicken Breast Veggie Plate | American | 25 min
+7. Shrimp Rice Bowl | Vietnamese | 20 min
+8. Chicken Stir Fry | Chinese | 25 min
+9. Thai Basil Chicken | Thai | 20 min
+10. Chicken Rice Bowl | Japanese | 20 min
+Key Metrics:
+  Protein: 296
+  Vegetables: 24
+  Prep Time: 240
+  Unique Cuisines: 7
+  Repetition Count: 0
+  Final Score: 196.13
+
+Simulated Annealing Result
+==================================================
+1. Chicken Stir Fry | Chinese | 25 min
+2. Thai Basil Chicken | Thai | 20 min
+3. Chicken Breast Veggie Plate | American | 25 min
+4. Tuna Sandwich Plate | American | 10 min
+5. Mediterranean Salmon Plate | Mediterranean | 25 min
+6. Chicken Rice Bowl | Japanese | 20 min
+7. Shrimp Rice Bowl | Vietnamese | 20 min
+8. Grilled Steak Bowl | American | 30 min
+9. Grilled Chicken Salad | American | 20 min
+10. Salmon Quinoa Bowl | American | 25 min
+Key Metrics:
+  Protein: 290
+  Vegetables: 23
+  Prep Time: 220
+  Unique Cuisines: 6
+  Repetition Count: 0
+  Final Score: 196.81
+
+Search Comparison
+==================================================
+Initial Score: 102.88
+Hill Climbing Score: 196.13
+Simulated Annealing Score: 196.81
+Better algorithm in this run: Simulated Annealing
+
+
+CULTURAL-EXPLORATION MODE
+############################################################
+
+Initial Random Plan
+==================================================
+1. Chicken Rice Bowl | Japanese | 20 min
+2. Baked Vegetable Casserole | French | 45 min
+3. High-Protein Tofu Stir Fry | Chinese | 25 min
+4. Teriyaki Salmon | Japanese | 20 min
+5. Fish Tacos | Mexican | 25 min
+6. Thai Basil Chicken | Thai | 20 min
+7. Miso Soup Set | Japanese | 15 min
+8. Shrimp Rice Bowl | Vietnamese | 20 min
+9. Pho Bowl | Vietnamese | 35 min
+10. Turkey Sandwich Plate | American | 15 min
+Key Metrics:
+  Protein: 223
+  Vegetables: 20
+  Prep Time: 240
+  Unique Cuisines: 7
+  Repetition Count: 0
+  Final Score: 177.37
+
+Hill Climbing Result
+==================================================
+1. Shrimp Rice Bowl | Vietnamese | 20 min
+2. Zucchini Pasta Bowl | Italian | 25 min
+3. Greek Chicken Plate | Greek | 30 min
+4. German Chicken Schnitzel Plate | German | 35 min
+5. Thai Basil Chicken | Thai | 20 min
+6. Chicken Rice Bowl | Japanese | 20 min
+7. Chicken Stir Fry | Chinese | 25 min
+8. Mediterranean Salmon Plate | Mediterranean | 25 min
+9. Peruvian Chicken Bowl | South American | 30 min
+10. Salmon Quinoa Bowl | American | 25 min
+Key Metrics:
+  Protein: 270
+  Vegetables: 24
+  Prep Time: 255
+  Unique Cuisines: 10
+  Repetition Count: 0
+  Final Score: 224.13
+
+Simulated Annealing Result
+==================================================
+1. Bulgogi Bowl | Korean | 30 min
+2. Peruvian Chicken Bowl | South American | 30 min
+3. Chicken Rice Bowl | Japanese | 20 min
+4. Fish Tacos | Mexican | 25 min
+5. Shrimp Rice Bowl | Vietnamese | 20 min
+6. Thai Basil Chicken | Thai | 20 min
+7. Greek Chicken Plate | Greek | 30 min
+8. Chicken Stir Fry | Chinese | 25 min
+9. Chicken Breast Veggie Plate | American | 25 min
+10. Veggie Buddha Bowl | Mediterranean | 20 min
+Key Metrics:
+  Protein: 266
+  Vegetables: 24
+  Prep Time: 245
+  Unique Cuisines: 10
+  Repetition Count: 0
+  Final Score: 223.59
+
+Search Comparison
+==================================================
+Initial Score: 177.37
+Hill Climbing Score: 224.13
+Simulated Annealing Score: 223.59
+Better algorithm in this run: Hill Climbing
 ```
 
 ### How to Interpret the Output
 
 If the hill climbing or simulated annealing score is higher than the initial random plan score, that means the search algorithm successfully improved the meal plan according to the current utility function.
 
-The program also prints a direct comparison of the final scores for both search methods. This makes it easier to see which algorithm performed better in a given run.
+The key metrics make it easier to explain why one plan scores better than another. For example:
+- higher protein and vegetables usually help in health-focused mode
+- lower prep time is especially important in convenience-focused mode
+- higher cuisine diversity and authenticity matter more in cultural-exploration mode
 
-For example:
+A short way to read the output is:
 
-- Initial Score = 219.74
-- Hill Climbing Score = 267.7
-- Simulated Annealing Score = 269.0
+- Initial Random Plan: the starting point before optimization
+- Hill Climbing Result: a greedily improved plan that only accepts better local moves
+- Simulated Annealing Result: a more flexible search result that can sometimes escape poorer local optima
 
-In this example, simulated annealing produced the highest-scoring meal plan under the current utility function. This means the search framework is working.
+#### Short explanation examples
+- Initial Random Plan: This shows the starting meal plan before the search process improves it.
+- Hill Climbing Result: This result shows how much the plan can improve through greedy local optimization.
+- Simulated Annealing Result: This result shows how a more flexible search strategy may find a different or slightly stronger solution.
+- Search Comparison: This summarizes which algorithm produced the higher final score in that run.
 
-## Important Note About Current Behavior
+### Experimental Evaluation
+The experiment script runs multiple trials and reports:
+	•	hill climbing scores across runs
+	•	simulated annealing scores across runs
+	•	valid run counts
+	•	average scores
+	•	the better-performing algorithm in each mode
 
-The current version may still produce somewhat repetitive meal plans. This does not mean the code is broken. It usually means the scoring function is still rewarding some recipes too strongly.
+This helps evaluate whether one search method is more effective than the other under different user preferences.
 
-For example, if one recipe has:
+## Experimental Results Summary
 
-- high protein
-- decent accessibility
-- strong authenticity
-- low prep time
+Repeated experiments show that both hill climbing and simulated annealing consistently produce strong valid meal plans. Their performance is often close, but the better-performing algorithm can vary by preference mode and random search path.
 
-the search may keep selecting it.
+In general:
+- simulated annealing often performs slightly better in health-focused mode
+- hill climbing and simulated annealing perform similarly in convenience-focused mode
+- both methods perform strongly in cultural-exploration mode, with small differences across runs
 
-This is a normal early-stage result. The next step is to refine the scoring function so the planner better balances:
-
-- diversity
-- nutrition
-- practicality
-- cultural factors
+These results suggest that both search methods are effective for the meal-planning problem, while simulated annealing may have a slight advantage in more complex optimization settings.
 
 ## Why Results May Vary Across Runs
 
-Because the planner uses randomized initialization and stochastic neighbor exploration, results vary slightly across runs. This is expected for local search methods, especially simulated annealing. Despite this variability, the algorithms consistently improve the score of the initial candidate meal plan, showing that the search framework is functioning as intended.
+Because the planner uses randomized initialization and stochastic neighbor exploration, results vary slightly across runs. This is expected for local search methods, especially simulated annealing.
+
+Even with this variability, both algorithms consistently improve meal plans and usually produce strong valid solutions.
 
 ## Current Limitations
 
-This is still an early prototype. The current version does not yet include:
-
-- more advanced ingredient substitution logic
-- user-specific cuisine preference weights
-- realistic nutrition totals by meal type
-- explanation output for why a plan was chosen
-- detailed evaluation plots
+This is still a prototype. The current version does not yet include:
+- free-form user input for custom preferences
+- ingredient-level substitution logic
+- day-by-day meal scheduling (for example breakfast/lunch/dinner structure)
+- automatic natural-language explanation generation inside the program output
+- visualization of experimental results
+- a front-end interface
 
 ## Next Steps
 
 Planned improvements include:
 
-- expanding the recipe dataset
-- strengthening diversity rules
-- adding cuisine preference by country
-- improving substitution and neighbor operators
-- comparing hill climbing vs simulated annealing more systematically
-- logging score improvement over time
+- refining the distinction between preference modes even further
+- improving cultural-mode behavior so it relies less on protein-heavy plans
+- adding clearer natural-language explanations to the program output
+- saving experiment summaries in a cleaner table or file
+- optional visualization of score comparisons
+- final polish for report and presentation
 
 ## Summary
 
-This prototype already demonstrates the core AI idea of the project:
-
-A weekly meal plan can be modeled as a search state, evaluated with a utility function, constrained by nutritional requirements, and improved through local search methods.
+This project builds a culturally-aware meal planning agent that treats a weekly meal plan as a search problem. The system evaluates candidate plans with a weighted utility function and improves them using local search methods, specifically hill climbing and simulated annealing. The current version supports multiple user preference modes, interpretable score breakdowns, richer neighbor actions, and repeated experiments comparing both algorithms.

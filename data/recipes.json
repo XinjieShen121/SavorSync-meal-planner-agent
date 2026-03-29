@@ -251,4 +251,207 @@
     "cultural_authenticity": 0.75,
     "nutrition": { "protein": 10, "vegetables": 4, "calories": 320 }
   }
+  ,
+  {
+    "id": "r29",
+    "name": "Grilled Steak Bowl",
+    "cuisine": "American",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.88,
+    "cultural_authenticity": 0.6,
+    "nutrition": { "protein": 34, "vegetables": 2, "calories": 540 }
+  },
+  {
+    "id": "r30",
+    "name": "Salmon Quinoa Bowl",
+    "cuisine": "American",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.65,
+    "nutrition": { "protein": 30, "vegetables": 3, "calories": 500 }
+  },
+  {
+    "id": "r31",
+    "name": "Chicken Breast Veggie Plate",
+    "cuisine": "American",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.95,
+    "cultural_authenticity": 0.55,
+    "nutrition": { "protein": 33, "vegetables": 4, "calories": 420 }
+  },
+  {
+    "id": "r32",
+    "name": "High-Protein Tofu Stir Fry",
+    "cuisine": "Chinese",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.85,
+    "cultural_authenticity": 0.75,
+    "nutrition": { "protein": 24, "vegetables": 3, "calories": 400 }
+  },
+  {
+    "id": "r33",
+    "name": "Veggie Buddha Bowl",
+    "cuisine": "Mediterranean",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.92,
+    "cultural_authenticity": 0.7,
+    "nutrition": { "protein": 15, "vegetables": 5, "calories": 390 }
+  },
+  {
+    "id": "r34",
+    "name": "Roasted Vegetable Plate",
+    "cuisine": "Mediterranean",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.75,
+    "nutrition": { "protein": 10, "vegetables": 6, "calories": 340 }
+  },
+  {
+    "id": "r35",
+    "name": "Zucchini Pasta Bowl",
+    "cuisine": "Italian",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.88,
+    "cultural_authenticity": 0.72,
+    "nutrition": { "protein": 12, "vegetables": 5, "calories": 360 }
+  },
+  {
+    "id": "r36",
+    "name": "Mediterranean Lentil Salad",
+    "cuisine": "Mediterranean",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.93,
+    "cultural_authenticity": 0.78,
+    "nutrition": { "protein": 16, "vegetables": 4, "calories": 350 }
+  },
+  {
+    "id": "r37",
+    "name": "Chicken Wrap",
+    "cuisine": "American",
+    "prep_time": 15,
+    "ingredient_accessibility": 0.97,
+    "cultural_authenticity": 0.5,
+    "nutrition": { "protein": 24, "vegetables": 2, "calories": 410 }
+  },
+  {
+    "id": "r38",
+    "name": "Veggie Omelette Plate",
+    "cuisine": "French",
+    "prep_time": 15,
+    "ingredient_accessibility": 0.96,
+    "cultural_authenticity": 0.68,
+    "nutrition": { "protein": 18, "vegetables": 2, "calories": 300 }
+  },
+  {
+    "id": "r39",
+    "name": "Chicken Rice Bowl",
+    "cuisine": "Japanese",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.9,
+    "cultural_authenticity": 0.7,
+    "nutrition": { "protein": 26, "vegetables": 2, "calories": 430 }
+  },
+  {
+    "id": "r40",
+    "name": "Tuna Sandwich Plate",
+    "cuisine": "American",
+    "prep_time": 10,
+    "ingredient_accessibility": 0.98,
+    "cultural_authenticity": 0.45,
+    "nutrition": { "protein": 23, "vegetables": 1, "calories": 360 }
+  },
+  {
+    "id": "r41",
+    "name": "Moroccan Chickpea Stew",
+    "cuisine": "African",
+    "prep_time": 40,
+    "ingredient_accessibility": 0.75,
+    "cultural_authenticity": 0.9,
+    "nutrition": { "protein": 18, "vegetables": 4, "calories": 430 }
+  },
+  {
+    "id": "r42",
+    "name": "Ethiopian Lentil Plate",
+    "cuisine": "African",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.72,
+    "cultural_authenticity": 0.92,
+    "nutrition": { "protein": 17, "vegetables": 4, "calories": 400 }
+  },
+  {
+    "id": "r43",
+    "name": "Peruvian Chicken Bowl",
+    "cuisine": "South American",
+    "prep_time": 30,
+    "ingredient_accessibility": 0.8,
+    "cultural_authenticity": 0.82,
+    "nutrition": { "protein": 29, "vegetables": 2, "calories": 470 }
+  },
+  {
+    "id": "r44",
+    "name": "Brazilian Black Bean Plate",
+    "cuisine": "South American",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.82,
+    "cultural_authenticity": 0.85,
+    "nutrition": { "protein": 18, "vegetables": 3, "calories": 440 }
+  },
+  {
+    "id": "r45",
+    "name": "Spanish Veggie Paella",
+    "cuisine": "Spanish",
+    "prep_time": 40,
+    "ingredient_accessibility": 0.78,
+    "cultural_authenticity": 0.84,
+    "nutrition": { "protein": 14, "vegetables": 4, "calories": 460 }
+  },
+  {
+    "id": "r46",
+    "name": "German Chicken Schnitzel Plate",
+    "cuisine": "German",
+    "prep_time": 35,
+    "ingredient_accessibility": 0.83,
+    "cultural_authenticity": 0.78,
+    "nutrition": { "protein": 30, "vegetables": 2, "calories": 530 }
+  },
+  {
+    "id": "r47",
+    "name": "Mediterranean Salmon Plate",
+    "cuisine": "Mediterranean",
+    "prep_time": 25,
+    "ingredient_accessibility": 0.86,
+    "cultural_authenticity": 0.8,
+    "nutrition": { "protein": 31, "vegetables": 3, "calories": 480 }
+  },
+  {
+    "id": "r48",
+    "name": "Roasted Chickpea Wrap",
+    "cuisine": "Mediterranean",
+    "prep_time": 15,
+    "ingredient_accessibility": 0.94,
+    "cultural_authenticity": 0.72,
+    "nutrition": { "protein": 16, "vegetables": 3, "calories": 380 }
+  },
+  {
+    "id": "r49",
+    "name": "Baked Vegetable Casserole",
+    "cuisine": "French",
+    "prep_time": 45,
+    "ingredient_accessibility": 0.8,
+    "cultural_authenticity": 0.72,
+    "nutrition": { "protein": 12, "vegetables": 5, "calories": 390 }
+  },
+  {
+    "id": "r50",
+    "name": "Shrimp Rice Bowl",
+    "cuisine": "Vietnamese",
+    "prep_time": 20,
+    "ingredient_accessibility": 0.82,
+    "cultural_authenticity": 0.76,
+    "nutrition": { "protein": 25, "vegetables": 2, "calories": 420 }
+  }
+
+
+
+
 ]
