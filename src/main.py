@@ -6,6 +6,7 @@ from neighbors import random_initial_plan
 
 
 def print_score_breakdown(plan, weights):
+    # get the detailed score information for the current meal plan
     breakdown = get_score_breakdown(plan, weights)
 
     print("Key Metrics:")
@@ -20,13 +21,17 @@ def print_score_breakdown(plan, weights):
 def print_plan(title, plan, weights):
     print(f"\n{title}")
     print("=" * 50)
+
+    # print each meal in the weekly meal plan one by one
     for i, meal in enumerate(plan.meals, start=1):
         print(f"{i}. {meal['name']} | {meal['cuisine']} | {meal['prep_time']} min")
 
-    print_score_breakdown(plan, weights)
+    print_score_breakdown(plan, weights) #also print the key score breakdown
 
 
 def compare_results(initial_plan, hc_plan, sa_plan, weights):
+    # compute the final scores for the initial plan,
+    # the hill climbing result, and the simulated annealing result
     initial_score = score_meal_plan(initial_plan, weights)
     hc_score = score_meal_plan(hc_plan, weights)
     sa_score = score_meal_plan(sa_plan, weights)
@@ -37,6 +42,7 @@ def compare_results(initial_plan, hc_plan, sa_plan, weights):
     print(f"Hill Climbing Score: {hc_score:.2f}")
     print(f"Simulated Annealing Score: {sa_score:.2f}")
 
+    # compare which algorithm did better in this run
     if sa_score > hc_score:
         print("Better algorithm in this run: Simulated Annealing")
     elif hc_score > sa_score:
@@ -49,21 +55,30 @@ def run_mode(mode_name, recipes, weights):
     print(f"\n\n{mode_name}")
     print("#" * 60)
 
+    # Create one random starting meal plan before optimization
     initial_plan = random_initial_plan(recipes)
     print_plan("Initial Random Plan", initial_plan, weights)
 
+    # Run both search algorithms using the same recipes and weight setting
     hc_plan = hill_climb(recipes, weights)
     sa_plan = simulated_annealing(recipes, weights)
 
+    # print the optimized results from both algorithms
     print_plan("Hill Climbing Result", hc_plan, weights)
     print_plan("Simulated Annealing Result", sa_plan, weights)
 
+    # print the score comparison at the end of this mode
     compare_results(initial_plan, hc_plan, sa_plan, weights)
 
 
 def main():
+    # load the recipe dataset from the JSON file
+    
     recipes = load_recipes("data/recipes.json")
 
+    # Health-focused mode:
+    # reward protein and vegetables more strongly
+    # while still caring about diversity and repetition
     health_weights = {
         "protein": 1.0,
         "vegetables": 3.0,
@@ -74,6 +89,8 @@ def main():
         "repetition": 12.0,
     }
 
+    # Convenience-focused mode:
+    # reward easy ingredient access and lower prep time more strongly
     convenience_weights = {
         "protein": 0.7,
         "vegetables": 2.0,
@@ -94,6 +111,9 @@ def main():
     #     "repetition": 12.0,
     # }
 
+    # Cultural-exploration mode:
+    # reduce the importance of protein a bit
+    # and push the planner more toward authenticity and cuisine diversity
     cultural_weights = {
     "protein": 0.45,
     "vegetables": 2.0,
@@ -104,6 +124,7 @@ def main():
     "repetition": 12.0,
 }
 
+    # Run the planner for all three user preference modes
     run_mode("HEALTH-FOCUSED MODE", recipes, health_weights)
     run_mode("CONVENIENCE-FOCUSED MODE", recipes, convenience_weights)
     run_mode("CULTURAL-EXPLORATION MODE", recipes, cultural_weights)
