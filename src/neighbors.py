@@ -5,7 +5,7 @@ from meal_plan import MealPlan
 
 
 def random_initial_plan(recipes: List[Dict[str, Any]], plan_size: int = 10) -> MealPlan:
-    # Build a random starting meal plan using unique recipes.
+    # build a random starting meal plan using unique recipes.
     if len(recipes) < plan_size:
         raise ValueError("Not enough recipes to create an initial plan.")
     chosen = random.sample(recipes, plan_size)
@@ -13,7 +13,7 @@ def random_initial_plan(recipes: List[Dict[str, Any]], plan_size: int = 10) -> M
 
 
 def replace_one_meal(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Replace one meal with a different recipe, preferably one not already used.
+    # replace one meal with a different recipe, preferably one not already used.
     neighbor = plan.copy()
     idx = random.randrange(len(neighbor.meals))
     current_meal = neighbor.meals[idx]
@@ -21,7 +21,7 @@ def replace_one_meal(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
     used_ids = {meal["id"] for meal in neighbor.meals}
     candidates = [r for r in recipes if r["id"] != current_meal["id"] and r["id"] not in used_ids]
 
-    # If all unused recipes are exhausted, allow any different recipe.
+    # if all unused recipes are exhausted, allow any different recipe.
     if not candidates:
         candidates = [r for r in recipes if r["id"] != current_meal["id"]]
 
@@ -32,7 +32,7 @@ def replace_one_meal(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
 
 
 def swap_two_meals(plan: MealPlan) -> MealPlan:
-    # Swap two meal positions in the plan.
+    # swap two meal positions in the plan.
     neighbor = plan.copy()
     i, j = random.sample(range(len(neighbor.meals)), 2)
     neighbor.meals[i], neighbor.meals[j] = neighbor.meals[j], neighbor.meals[i]
@@ -40,7 +40,7 @@ def swap_two_meals(plan: MealPlan) -> MealPlan:
 
 
 def replace_with_same_cuisine(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Replace one meal with another meal from the same cuisine.
+    # replace one meal with another meal from the same cuisine.
     neighbor = plan.copy()
     idx = random.randrange(len(neighbor.meals))
     current_meal = neighbor.meals[idx]
@@ -53,6 +53,7 @@ def replace_with_same_cuisine(plan: MealPlan, recipes: List[Dict[str, Any]]) -> 
         and r["id"] not in used_ids
     ]
 
+    # If there are no unused options, allow any other meal from the same cuisine
     if not same_cuisine:
         same_cuisine = [
             r for r in recipes
@@ -67,7 +68,7 @@ def replace_with_same_cuisine(plan: MealPlan, recipes: List[Dict[str, Any]]) -> 
 
 
 def replace_with_different_cuisine(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Replace one meal with something from a different cuisine.
+    # replace one meal with something from a different cuisine.
     neighbor = plan.copy()
     idx = random.randrange(len(neighbor.meals))
     current_meal = neighbor.meals[idx]
@@ -79,6 +80,7 @@ def replace_with_different_cuisine(plan: MealPlan, recipes: List[Dict[str, Any]]
         and r["id"] not in used_ids
     ]
 
+    # If no unused options exist, allow any meal from a different cuisine
     if not different_cuisine:
         different_cuisine = [r for r in recipes if r["cuisine"] != current_meal["cuisine"]]
 
@@ -89,7 +91,7 @@ def replace_with_different_cuisine(plan: MealPlan, recipes: List[Dict[str, Any]]
 
 
 def reduce_prep_time(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Find the longest-prep meal and replace it with a quicker unused option.
+    # find the longest-prep meal and replace it with a quicker unused option.
     neighbor = plan.copy()
     idx = max(range(len(neighbor.meals)), key=lambda i: neighbor.meals[i]["prep_time"])
     current_meal = neighbor.meals[idx]
@@ -102,6 +104,7 @@ def reduce_prep_time(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
         and r["id"] not in used_ids
     ]
 
+     # If no unused faster meals exist, allow any faster meal
     if not better_options:
         better_options = [
             r for r in recipes
@@ -116,7 +119,7 @@ def reduce_prep_time(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
 
 
 def improve_diversity(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Replace a duplicate meal with an unused recipe to improve meal diversity.
+    # replace a duplicate meal with an unused recipe to improve meal diversity.
     neighbor = plan.copy()
     names = [meal["name"] for meal in neighbor.meals]
 
@@ -138,7 +141,7 @@ def improve_diversity(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan
 
 
 def improve_vegetables(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Replace the lowest-vegetable meal with a higher-vegetable option.
+    # replace the lowest-vegetable meal with a higher-vegetable option.
     neighbor = plan.copy()
     idx = min(range(len(neighbor.meals)), key=lambda i: neighbor.meals[i]["nutrition"]["vegetables"])
     current_meal = neighbor.meals[idx]
@@ -151,6 +154,7 @@ def improve_vegetables(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPla
         and r["id"] not in used_ids
     ]
 
+    # If no unused better option exists, allow any higher-vegetable recipe
     if not better_options:
         better_options = [
             r for r in recipes
@@ -165,11 +169,13 @@ def improve_vegetables(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPla
 
 
 def culturally_similar_substitution(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Replace one meal with a culturally related option.
+    # replace one meal with a culturally related option.
     neighbor = plan.copy()
     idx = random.randrange(len(neighbor.meals))
     current = neighbor.meals[idx]
 
+    # These groups are not perfect, but they let the planner make substitutions
+    # that still feel somewhat culturally connected
     cuisine_groups = {
         "Chinese": ["Chinese", "Japanese", "Korean", "Vietnamese"],
         "Japanese": ["Japanese", "Chinese", "Korean", "Vietnamese"],
@@ -200,6 +206,7 @@ def culturally_similar_substitution(plan: MealPlan, recipes: List[Dict[str, Any]
         and r["id"] not in used_ids
     ]
 
+    # If no unused candidates are available, allow any meal from the related group
     if not candidates:
         candidates = [
             r for r in recipes
@@ -214,7 +221,7 @@ def culturally_similar_substitution(plan: MealPlan, recipes: List[Dict[str, Any]
 
 
 def generate_neighbor(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan:
-    # Randomly choose one type of search move.
+    # Randomly choose one type of search move
     action = random.choice([
         "replace",
         "swap",
@@ -243,4 +250,5 @@ def generate_neighbor(plan: MealPlan, recipes: List[Dict[str, Any]]) -> MealPlan
     if action == "cultural_sub":
         return culturally_similar_substitution(plan, recipes)
 
+    # Fallback case, though in practice one of the actions above should always run
     return plan.copy()

@@ -11,45 +11,49 @@ def simulated_annealing(
     weights: Dict[str, float],
     iterations: int = 1000,
     temperature: float = 10.0,
-    cooling_rate: float = 0.995
-) -> MealPlan:
-    # Start with one random weekly meal plan
+    cooling_rate: float = 0.995,
+    return_history: bool = False
+):
+    # start from one random weekly meal plan
     current = random_initial_plan(recipes)
-
-    # Score the initial plan
     current_score = score_meal_plan(current, weights)
 
-
-    best = current # keep track of the best plan found so far
+    # keep track of the best plan seen so far
+    best = current
     best_score = current_score
 
-    # Try to improve the plan over iteration
-    for _ in range(iterations):
-         # Generate a nearby candidate plan
-        neighbor = generate_neighbor(current, recipes)
+    # keep track of score history for plotting later
+    history = [current_score]
 
-        # Score the candidate plan
+    for _ in range(iterations):
+        neighbor = generate_neighbor(current, recipes)
         neighbor_score = score_meal_plan(neighbor, weights)
 
-        # Compute the score difference
         delta = neighbor_score - current_score
 
-        # Always accept better neighbors
+        # always accept better moves
         if delta > 0:
             current = neighbor
             current_score = neighbor_score
         else:
-            # Sometimes accept a worse neighbor with a probability that decreases over time (simulated annealing)
+            # sometimes accept worse moves to escape local optima
             if temperature > 0 and random.random() < math.exp(delta / temperature):
                 current = neighbor
                 current_score = neighbor_score
 
-        # Update the best plan seen so far
+        # Update best plan if needed
         if current_score > best_score:
             best = current
             best_score = current_score
 
-        # Gradually lower the temperature to reduce the chance of accepting worse solutions as the search progresses
+        # save the current score after this iteration
+        history.append(current_score)
+
+        # slowly lower the temperature
         temperature *= cooling_rate
 
-    return best # return the best meal plan
+    # keep old behavior by default, but optionally return history too
+    if return_history:
+        return best, history
+
+    return best

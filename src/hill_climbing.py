@@ -7,26 +7,34 @@ from scoring import score_meal_plan
 def hill_climb(
     recipes: List[Dict[str, Any]],
     weights: Dict[str, float],
-    iterations: int = 500
-) -> MealPlan:
-    # Start with one random weekly meal plan
-    current = random_initial_plan(recipes)  # initial state in the search space
+    iterations: int = 500,
+    return_history: bool = False
+):
+    # start with one random weekly meal plan
+    current = random_initial_plan(recipes)
 
-    # Evaluate how good the starting meal plan is 
-    # using the weighted utility / scoring function
+    # score that starting plan so we have something to compare against
     current_score = score_meal_plan(current, weights)
 
-    # Try to improve the plan step by step
-    for _ in range(iterations):
-        # Create a nearby plan by making a small change such as replacing or swapping meals
-        neighbor = generate_neighbor(current, recipes)
+    # keep track of score history for plotting later
+    history = [current_score]
 
-        # Score the new candidate plan
+    #  try to improve the current plan one move at a time
+    for _ in range(iterations):
+        # generate one neighboring plan by making a small change
+        neighbor = generate_neighbor(current, recipes)
         neighbor_score = score_meal_plan(neighbor, weights)
 
-        # Hill climbing only accepts the new plan if it's better than the current one
-        if neighbor_score > current_score:
+        # Hill climbing only accepts a move if it improves the score
+        if neighbor_score > current_score: # Hill climbing is greedy
             current = neighbor
             current_score = neighbor_score
 
-    return current # return the best plan reached by repeated local improvement
+        # record the current score after each iteration
+        history.append(current_score)  # if no better move was found, the score stays the same
+
+    # Keep old behavior by default, but optionally return history too
+    if return_history:
+        return current, history
+
+    return current
