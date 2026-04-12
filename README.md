@@ -35,7 +35,7 @@ The current version includes:
 - three search algorithms:
   - hill climbing
   - simulated annealing
-  - genetic algorithm with elitism
+  - genetic algorithm
 - three user preference modes:
   - health-focused
   - convenience-focused
@@ -118,7 +118,7 @@ Implements hill climbing as a baseline greedy local search method. It can also o
 Implements simulated annealing as a stochastic local search method that can escape local optima. It can also optionally return score history for convergence visualization.
 
 ### `src/genetic_algorithm.py`
-Implements a genetic algorithm using tournament selection, crossover, mutation, and elitism. It can also optionally return score history by generation.
+Implements a genetic algorithm using tournament selection, crossover, and mutation. It can also optionally return score history by generation.
 
 ### `src/main.py`
 Runs the planner in the three preference modes and prints meal plans, key metrics, and algorithm comparisons.
@@ -293,7 +293,7 @@ The key metrics make it easier to explain why one plan scores better than anothe
 - Initial Random Plan: the starting point before optimization
 - Hill Climbing Result: a greedily improved plan that only accepts better local moves
 - Simulated Annealing Result: a more flexible search result that can sometimes escape poorer local optima
-- Genetic Algorithm Result: an evolutionary search result built from population-based selection, crossover, mutation, and elitism
+- Genetic Algorithm Result: an evolutionary search result built from population-based selection, crossover, and mutation
 - Search Comparison: a summary of which algorithm produced the highest final score in that run
 
 ### Experimental Evaluation
@@ -313,7 +313,7 @@ Repeated experiments show that hill climbing, simulated annealing, and the genet
 
 Hill climbing often performs competitively and converges quickly, while the genetic algorithm provides stable performance but generally underperforms the best local-search results under the current crossover and mutation design.
 
-The genetic algorithm serves as a meaningful evolutionary baseline, although under the current crossover, mutation, and elitism design it generally remains slightly below the strongest local-search results.
+The genetic algorithm serves as a meaningful evolutionary baseline, although under the current crossover and mutation design it generally remains slightly below the strongest local-search results.
 
 These results suggest that hill climbing and simulated annealing are the strongest methods overall, while the genetic algorithm provides a meaningful evolutionary baseline.
 
@@ -321,7 +321,7 @@ These results suggest that hill climbing and simulated annealing are the stronge
 The convergence plots provide additional insight into algorithm behavior over time.
 -	Hill Climbing improves rapidly in early iterations but often plateaus, showing its greedy tendency to get stuck in local optima.
 -	Simulated Annealing is more variable because it sometimes accepts worse intermediate solutions, allowing broader exploration of the search space.
-- Genetic Algorithm improves quickly in early generations and stabilizes due to population-based search and elitism, though it may lose diversity after early convergence.
+- Genetic Algorithm improves quickly in early generations through population-based search, though it may lose diversity after early convergence.
 
 These plots help illustrate the different exploration-exploitation trade-offs across the three optimization methods.
 
@@ -353,4 +353,4 @@ Potential future improvements include:
 
 ## Summary
 
-This project builds a culturally-aware meal planning agent that formulates weekly meal planning as a search and optimization problem. Candidate meal plans are evaluated with a weighted utility function and improved using three different search strategies: hill climbing, simulated annealing, and a genetic algorithm with elitism. The final system includes multiple preference modes, interpretable score breakdowns, repeated experiments, and convergence visualizations, enabling a full comparative study across greedy local search, stochastic local search, and evolutionary search.
+This project builds a culturally-aware meal planning agent that formulates weekly meal planning as a search and optimization problem. Candidate meal plans are evaluated with a weighted utility function and improved using three different search strategies: hill climbing, simulated annealing, and a genetic algorithm. The final system includes multiple preference modes, interpretable score breakdowns, repeated experiments, and convergence visualizations, enabling a full comparative study across greedy local search, stochastic local search, and evolutionary search.
